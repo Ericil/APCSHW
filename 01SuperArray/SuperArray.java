@@ -138,38 +138,43 @@ public class SuperArray{
 	
     public static void main(String[]args){
 	SuperArray test = new SuperArray(4);
-	test.data[0] = 1;
-	test.data[1] = 2;
-	test.resize(3);
-	test.data[2] = 3;
-	test.add(4);
-	System.out.println(test.toString());
-	System.out.println("Should return 1, 2, 3, 4");
-	System.out.println(test.size());
-	System.out.println("Should return 4");
-	test.add(5, 5);
-	System.out.println(test.toString());
-	System.out.println("Should return 1, 2, 3, 4, null, 5");
-	test.clear();
-	System.out.println(test.toString());
-	System.out.println("Should return all nulls");
-	System.out.println(test.size());
-	System.out.println("Should return 0");
-	test.get(2);
-	System.out.println("Should return out of bounds");
-	test.set(2, "notnull");
-	System.out.println("Should return out of bounds");
-	System.out.println(test.toString());
-	System.out.println("Should return all nulls");
-	System.out.println(test.size());
-	System.out.println("Should return 0");
-	test.data[0] = 0;
-	test.data[1] = 1;
-	test.data[2] = 2;
-	test.data[3] = 3;
-        test.remove(2);
-	System.out.println(test.toString());
-	System.out.println("Should return 0, 1, 3, null, null, null");
-
+	try{
+	    test.data[0] = 1;
+	    test.data[1] = 2;
+	    test.resize(3);
+	    test.data[2] = 3;
+	    test.add(4);
+	    System.out.println(test.toString());
+	    System.out.println("Should return 1, 2, 3, 4");
+	    System.out.println(test.size());
+	    System.out.println("Should return 4");
+	    test.add(5, 5);
+	    System.out.println(test.toString());
+	    System.out.println("Should return 1, 2, 3, 4, null, 5");
+	    test.clear();
+	    System.out.println(test.toString());
+	    System.out.println("Should return all nulls");
+	    System.out.println(test.size());
+	    System.out.println("Should return 0");
+	    test.get(2);
+	    System.out.println("Should return out of bounds");
+	    test.set(2, "notnull");
+	    System.out.println("Should return out of bounds");
+	    System.out.println(test.toString());
+	    System.out.println("Should return all nulls");
+	    System.out.println(test.size());
+	    System.out.println("Should return 0");
+	    test.data[0] = 0;
+	    test.data[1] = 1;
+	    test.data[2] = 2;
+	    test.data[3] = 3;
+	    test.remove(2);
+	    System.out.println(test.toString());
+	    System.out.println("Should return 0, 1, 3, null, null, null");
+	}
+	catch(IndexOutOfBoundsException e){
+	    System.out.println("Failure to run code");
+	    e.printStackTrace();
+	}
     }
 }

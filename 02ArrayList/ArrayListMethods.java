@@ -10,23 +10,16 @@ public class ArrayListMethods{
 	}
     }
     public static void randomize(ArrayList<Integer> L){
-	ArrayList<Integer> data = new ArrayList<Integer>(L.size());
 	Random r = new Random();
 	int counter = 0;
 	int place;
 	while (counter < L.size()){
-	    boolean through = false;
-	    place = r.nextInt(L.size());
-	    while (through == false){
-		if (data.get(place) == null){
-		    data.set(place, L.get(counter));
-		    through = true;
-		}
-		place = r.nextInt(L.size());
-	    }
+	    int position = r.nextInt(L.size());
+	    place = L.get(position);
+	    L.set(position, L.get(counter));
+	    L.set(counter, place);
 	    counter = counter + 1;
 	}
-	L = data;
     }
     public static void main(String[]args){
 	ArrayList<Integer> test = new ArrayList<Integer>();

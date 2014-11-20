@@ -73,6 +73,34 @@ public class WordGrid{
 	}
 	return false;
     }
+    public boolean addWordVertical(String word, int row, int col){
+	if (word.length() <= (rowcounter - row)){
+	    int counter = 0;
+	    while (counter < word.length() - 1){
+		if ((data[row + counter][col] == s.charAt(0)) || (data[row + counter][col] == word.charAt(counter))){
+		    data[row + counter][col] = word.charAt(counter);
+		    counter = counter + 1;
+		}else{
+		    return false;
+		}
+	    }return true;
+	}
+	return false;
+    }
+    public boolean addWordDiagonal(String word, int row, int col){
+	if ((word.length() <= (rowcounter - row)) || (word.length() <= (colcounter - col))){
+	    int counter = 0;
+	    while (counter < word.length() - 1){
+		if ((data[row + counter][col + counter] == s.charAt(0)) || (data[row + counter][col + counter] == word.charAt(counter))){
+		    data[row + counter][col + counter] = word.charAt(counter);
+		    counter = counter + 1;
+		}else{
+		    return false;
+		}
+	    }return true;
+	}
+	return false;
+    }
 
     //vertical + diagonal should be implemented as well.
     public static void main(String[]args){
@@ -80,7 +108,11 @@ public class WordGrid{
 	System.out.println(tester);
 	tester.clear();
 	System.out.println(tester);
-	System.out.println(tester.addWordHorizontal("cookies", 3, 0));
+	System.out.println(tester.addWordHorizontal("cookies", 6, 3));
+	System.out.println(tester);
+	System.out.println(tester.addWordVertical("cookies", 1, 8));
+	System.out.println(tester);
+	System.out.println(tester.addWordDiagonal("cookies", 0, 0));
 	System.out.println(tester);
 	
 	

@@ -14,7 +14,8 @@ public class WordGrid{
 	colcounter = cols;
     }
 
-    /**Set all values in the WordGrid to spaces ' '*/
+    /**Set all values in the WordGrid to spaces '.'
+     */
     private void clear(){
 	int counter = 0;
 	while (counter < rowcounter){
@@ -48,6 +49,46 @@ public class WordGrid{
 	}
 	return printing;
     }
+    public boolean helping(String word, int row, int col, int rowadd, int coladd){
+	if ((rowadd <= (rowcounter - row)) && (coladd <= (colcounter - col))){
+	    int counter = 0;
+	    int rows = rowadd;
+	    int cols = coladd;
+	    boolean cookies = false;
+	    while ((counter < word.length() - 1) && cookies == false){
+		if ((data[row + (rowadd - rows)][col + (coladd - cols)] == s.charAt(0)) || (data[row + (rowadd - rows)][col + (coladd - cols)] == word.charAt(counter))){
+		    counter = counter + 1;
+		    if (rows != 0){
+			rows = rows - 1;
+		    }
+		    if (cols != 0){
+			cols = cols - 1;
+		    }
+		}else{
+		    cookies = true;
+		}
+	    }
+	    if (cookies == true){
+		return false;
+	    }
+	    counter = 0;
+	    rows = rowadd;
+	    cols = coladd;
+	    while (counter < word.length() - 1){
+		data[row + (rowadd - rows)][col + (coladd - cols)] = word.charAt(counter);
+		if (rows != 0){
+		    rows = rows - 1;
+		}
+		if (cols != 0){
+		    cols = cols - 1;
+		}
+		counter = counter + 1;
+	    }
+	    return true;
+	}
+	return false;
+    }
+	
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
@@ -59,50 +100,34 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-	if (word.length() <= (colcounter - col)){
-	    int counter = 0;
-	    while (counter < word.length() - 1){
-		if ((data[row][col + counter] == s.charAt(0)) || (data[row][col + counter] == word.charAt(counter))){
-		    data[row][col + counter] = word.charAt(counter);
-		    counter = counter + 1;
-		}else{
-		    return false;
-		}
-	    }
-	    return true;
-	}
-	return false;
+	return helping(word, row, col, 0, word.length());
     }
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from top to bottom, must fit on the WordGrid, and must
+     *have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical locaiton of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
     public boolean addWordVertical(String word, int row, int col){
-	if (word.length() <= (rowcounter - row)){
-	    int counter = 0;
-	    while (counter < word.length() - 1){
-		if ((data[row + counter][col] == s.charAt(0)) || (data[row + counter][col] == word.charAt(counter))){
-		    data[row + counter][col] = word.charAt(counter);
-		    counter = counter + 1;
-		}else{
-		    return false;
-		}
-	    }return true;
-	}
-	return false;
+	return helping(word, row, col, word.length(), 0);
     }
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from left to right,top to bottom, must fit on the WordGrid, and must
+     *have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical locaiton of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
     public boolean addWordDiagonal(String word, int row, int col){
-	if ((word.length() <= (rowcounter - row)) || (word.length() <= (colcounter - col))){
-	    int counter = 0;
-	    while (counter < word.length() - 1){
-		if ((data[row + counter][col + counter] == s.charAt(0)) || (data[row + counter][col + counter] == word.charAt(counter))){
-		    data[row + counter][col + counter] = word.charAt(counter);
-		    counter = counter + 1;
-		}else{
-		    return false;
-		}
-	    }return true;
-	}
-	return false;
+	return helping(word, row, col, word.length(), word.length());
     }
-
-    //vertical + diagonal should be implemented as well.
     public static void main(String[]args){
 	WordGrid tester = new WordGrid(10, 10);
 	System.out.println(tester);

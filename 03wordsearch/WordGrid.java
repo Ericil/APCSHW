@@ -1,6 +1,7 @@
 public class WordGrid{
     private char[][] data;
     private int rowcounter, colcounter;
+    private String s = ".";
     
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -15,15 +16,14 @@ public class WordGrid{
 
     /**Set all values in the WordGrid to spaces ' '*/
     private void clear(){
-	int counter = rowcounter;
-	while (counter != 0){
-	    int counter2 = colcounter;
-	    while (counter2 != 0){
-		String s = " ";
+	int counter = 0;
+	while (counter < rowcounter){
+	    int counter2 = 0;
+	    while (counter2 < colcounter){
 		data[counter][counter2] = s.charAt(0);
-		counter2 = counter2 - 1;
+		counter2 = counter2 + 1;
 	    }
-	    counter = counter - 1;
+	    counter = counter + 1;
 	}
     }
 
@@ -39,8 +39,9 @@ public class WordGrid{
 	    while (counter2 < colcounter){
 		if (counter2 == rowcounter - 1){
 		    printing = printing + data[counter][counter2] + "\n";
-		}
+		}else{
 		printing = printing + data[counter][counter2];
+		}
 		counter2 = counter2 + 1;
 	    }
 	    counter = counter + 1;
@@ -58,12 +59,30 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-	if (word.length() < (colcounter - col)){
-	    int counter = word.length();
+	if (word.length() <= (colcounter - col)){
+	    int counter = 0;
+	    while (counter < word.length() - 1){
+		if ((data[row][col + counter] == s.charAt(0)) || (data[row][col + counter] == word.charAt(counter))){
+		    data[row][col + counter] = word.charAt(counter);
+		    counter = counter + 1;
+		}else{
+		    return false;
+		}
+	    }
+	    return true;
 	}
 	return false;
     }
 
     //vertical + diagonal should be implemented as well.
-    
+    public static void main(String[]args){
+	WordGrid tester = new WordGrid(10, 10);
+	System.out.println(tester);
+	tester.clear();
+	System.out.println(tester);
+	System.out.println(tester.addWordHorizontal("cookies", 3, 0));
+	System.out.println(tester);
+	
+	
+    }
 }

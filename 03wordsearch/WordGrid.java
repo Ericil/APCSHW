@@ -106,7 +106,7 @@ public class WordGrid{
 	    int rowscounter = rows;
 	    int colscounter = cols;
 	    boolean cookies = false;
-	    while ((counter < word.length() - 1) && cookies == false){
+	    while ((counter <= word.length() - 1) && cookies == false){
 		if ((data[row + (rows - rowscounter)][col + (cols - colscounter)] == s.charAt(0)) || (data[row + (rows - rowscounter)][col + (cols - colscounter)] == word.charAt(counter))){
 		    counter = counter + 1;
 		    if (rowscounter != 0){
@@ -126,7 +126,7 @@ public class WordGrid{
 	    counter = 0;
 	    rowscounter = rows;
 	    colscounter = cols;
-	    while (counter < word.length() - 1){
+	    while (counter <= word.length() - 1){
 		data[row + (rows - rowscounter)][col + (cols - colscounter)] = word.charAt(counter);
 		if (rowscounter != 0){
 		    rowscounter = rowscounter - 1;
@@ -155,6 +155,9 @@ public class WordGrid{
      */
     public boolean addWordHorizontal(String word,int row, int col){
 	return helping(word, row, col, 0, 1);
+    }
+    public boolean addWordHorizontalRe(String word, int row, int col){
+	return helping(word, row, col, 0, -1);
     }
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from top to bottom, must fit on the WordGrid, and must
@@ -192,6 +195,8 @@ public class WordGrid{
 	System.out.println(tester.addWordVertical("cookies", 1, 8));
 	System.out.println(tester);
 	System.out.println(tester.addWordDiagonal("cookies", 0, 0));
+	System.out.println(tester);
+	System.out.println(tester.addWordHorizontalRe("cookies", 9, 9));
 	System.out.println(tester);
 	
 	

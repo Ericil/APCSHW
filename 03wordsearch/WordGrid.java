@@ -49,11 +49,25 @@ public class WordGrid{
 	}
 	return printing;
     }
-    public boolean helping(String word, int row, int col, int rowadd, int coladd){
+    //rowdirec: 1 is to theright, -1 is to the left, 0 is no movement in that direction
+    //coldirect: 1 is down, -1 is up, 0 is no movement in that direction
+    public boolean helping(String word, int row, int col, int rowdirec, int coldirec){
 	if ((rowadd <= (rowcounter - row)) && (coladd <= (colcounter - col))){
 	    int counter = 0;
-	    int rows = rowadd;
-	    int cols = coladd;
+	    int rows = 0;
+	    int cols = 0;
+	    if (rowdirect == 1){
+		rows = word.length();
+	    }else if (rowdirect == -1){
+		rows = word.length();
+		int reversecounter = word.length - 1;
+		String newword = "";
+		while (reversecounter >= 0){
+		    newword = newword + word.charAt(reversecounter);
+		    reversecounter = reversecounter - 1;
+		}
+		word = newword;
+	    }
 	    boolean cookies = false;
 	    while ((counter < word.length() - 1) && cookies == false){
 		if ((data[row + (rowadd - rows)][col + (coladd - cols)] == s.charAt(0)) || (data[row + (rowadd - rows)][col + (coladd - cols)] == word.charAt(counter))){

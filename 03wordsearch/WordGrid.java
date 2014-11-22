@@ -88,13 +88,15 @@ public class WordGrid{
 	    if ((col - word.length() + 1) >= 0){
 		cols = word.length();
 		col = col - word.length() + 1;
-		int reversecounter = word.length() - 1;
-		String newword = ""; 
-		while (reversecounter >= 0){
-		    newword = newword + word.charAt(reversecounter);
-		    reversecounter = reversecounter - 1;
+		if (rowdirect != -1){
+		    int reversecounter = word.length() - 1;
+		    String newword = ""; 
+		    while (reversecounter >= 0){
+			newword = newword + word.charAt(reversecounter);
+			reversecounter = reversecounter - 1;
+		    }
+		    word = newword;
 		}
-		word = newword;
 	    }else{
 		System.out.println("4");
 		return false;
@@ -172,6 +174,9 @@ public class WordGrid{
     public boolean addWordVertical(String word, int row, int col){
 	return helping(word, row, col, 1, 0);
     }
+    public boolean addWordVerticalRe(String word, int row, int col){
+	return helping(word, row, col, -1, 0);
+    }
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right,top to bottom, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
@@ -185,8 +190,14 @@ public class WordGrid{
     public boolean addWordDiagonal(String word, int row, int col){
 	return helping(word, row, col, 1, 1);
     }
+    public boolean addWordDiagonalRe(String word, int row, int col){
+	return helping(word, row, col, -1, -1);
+    }
+    public boolean addWordDiagonalOther(String word, int row, int col){
+	return helping(word, row, col, -1, 1);
+    }
     public static void main(String[]args){
-	WordGrid tester = new WordGrid(10, 10);
+	WordGrid tester = new WordGrid(20, 20);
 	System.out.println(tester);
 	tester.clear();
 	System.out.println(tester);
@@ -194,11 +205,16 @@ public class WordGrid{
 	System.out.println(tester);
 	System.out.println(tester.addWordVertical("cookies", 1, 8));
 	System.out.println(tester);
-	System.out.println(tester.addWordDiagonal("cookies", 0, 0));
+	System.out.println(tester.addWordDiagonal("cookies", 1, 3));
 	System.out.println(tester);
 	System.out.println(tester.addWordHorizontalRe("cookies", 9, 9));
 	System.out.println(tester);
-	
+	System.out.println(tester.addWordVerticalRe("cookies", 19, 0));
+	System.out.println(tester);
+	System.out.println(tester.addWordDiagonalRe("cookies", 19, 19));
+	System.out.println(tester);
+	System.out.println(tester.addWordDiagonalOther("cookies", 13, 13));
+	System.out.println(tester);
 	
     }
 }

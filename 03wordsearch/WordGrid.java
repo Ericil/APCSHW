@@ -12,6 +12,7 @@ public class WordGrid{
         data = new char[rows][cols];
 	rowcounter = rows;
 	colcounter = cols;
+	clear();
     }
 
     /**Set all values in the WordGrid to spaces '.'
@@ -49,100 +50,38 @@ public class WordGrid{
 	}
 	return printing;
     }
+    public boolean canplace(String word, int row, int col, int rowdirect, int coldirect){
+	if (rowdirect == 0 && coldirect == 0 ||
+	    row < 0 || col < 0 ||
+	    col + rowdirect*word.length() >= data[0].length || col + rowdirect*word.length() < 0 ||
+	    row + coldirect*word.length() >= data[0].length || row + coldirect*word.length() < 0){
+	    return false;
+	}
+	int counter = 0;
+	while (counter < word.length()){
+	    if(data[row + (coldirect * counter)][col + (rowdirect * counter)] != '.' &&  data[row + (coldirect * counter)][col + (rowdirect * counter)] != word.charAt(counter)){
+		return false;
+	    }
+	    counter = counter + 1;
+	}
+	return true;
+    }
     //rowdirec: 1 is to the right, -1 is to the left, 0 is no movement in that direction
     //coldirect: 1 is down, -1 is up, 0 is no movement in that direction
     public boolean helping(String word, int row, int col, int rowdirect, int coldirect){
 	int rows = 0;
 	int cols = 0;
-	if (rowdirect == 1){
-	    if ((row + word.length() - 1) <= rowcounter){
-		rows = word.length();
-	    }else{
-		System.out.println("1");
-		return false;
-	    }
-	}else if (rowdirect == -1){
-	    if ((row - word.length() + 1) >= 0){
-		rows = word.length();
-		row = row - word.length() + 1;
-		int reversecounter = word.length() - 1;
-		String newword = ""; 
-		while (reversecounter >= 0){
-		    newword = newword + word.charAt(reversecounter);
-		    reversecounter = reversecounter - 1;
-		}
-		word = newword;
-	    }else{
-		System.out.println("2");
-		return false;
-	    }
-	}
-	if (coldirect == 1){
-	    if ((col + word.length() - 1) <= colcounter){
-		cols = word.length();
-	    }else{
-		System.out.println("3");
-		return false;
-	    }
-	}else if (coldirect == -1){
-	    if ((col - word.length() + 1) >= 0){
-		cols = word.length();
-		col = col - word.length() + 1;
-		if (rowdirect != -1){
-		    int reversecounter = word.length() - 1;
-		    String newword = ""; 
-		    while (reversecounter >= 0){
-			newword = newword + word.charAt(reversecounter);
-			reversecounter = reversecounter - 1;
-		    }
-		    word = newword;
-		}
-	    }else{
-		System.out.println("4");
-		return false;
-	    }
-	}
-	System.out.println("Rows: " + rows + ", Cols: " + cols);
-	if ((rows <= (rowcounter - row)) && (cols <= (colcounter - col))){
-	    int counter = 0;
-	    int rowscounter = rows;
-	    int colscounter = cols;
-	    boolean cookies = false;
-	    while ((counter <= word.length() - 1) && cookies == false){
-		if ((data[row + (rows - rowscounter)][col + (cols - colscounter)] == s.charAt(0)) || (data[row + (rows - rowscounter)][col + (cols - colscounter)] == word.charAt(counter))){
-		    counter = counter + 1;
-		    if (rowscounter != 0){
-			rowscounter = rowscounter - 1;
-		    }
-		    if (colscounter != 0){
-			colscounter = colscounter - 1;
-		    }
-		}else{
-		    cookies = true;
-		}
-	    }
-	    if (cookies == true){
-		System.out.println("5");
-		return false;
-	    }
-	    counter = 0;
-	    rowscounter = rows;
-	    colscounter = cols;
-	    while (counter <= word.length() - 1){
-		data[row + (rows - rowscounter)][col + (cols - colscounter)] = word.charAt(counter);
-		if (rowscounter != 0){
-		    rowscounter = rowscounter - 1;
-		}
-		if (colscounter != 0){
-		    colscounter = colscounter - 1;
-		}
+	int counter = 0;
+	if (canplace(word, row, col, rowdirect, coldirect)){
+	    while (counter < word.length()){
+		data[row + coldirect*counter][col + rowdirect*counter] = word.charAt(counter);
 		counter = counter + 1;
 	    }
-	    System.out.println("6");
 	    return true;
+	}else{
+	    return false;
 	}
-	System.out.println("7");
-	return false;
+		
     }
 	
     /**Attempts to add a given word to the specified position of the WordGrid.
@@ -196,25 +135,5 @@ public class WordGrid{
     public boolean addWordDiagonalOther(String word, int row, int col){
 	return helping(word, row, col, -1, 1);
     }
-    public static void main(String[]args){
-	WordGrid tester = new WordGrid(20, 20);
-	System.out.println(tester);
-	tester.clear();
-	System.out.println(tester);
-	System.out.println(tester.addWordHorizontal("cookies", 6, 3));
-	System.out.println(tester);
-	System.out.println(tester.addWordVertical("cookies", 1, 8));
-	System.out.println(tester);
-	System.out.println(tester.addWordDiagonal("cookies", 1, 3));
-	System.out.println(tester);
-	System.out.println(tester.addWordHorizontalRe("cookies", 9, 9));
-	System.out.println(tester);
-	System.out.println(tester.addWordVerticalRe("cookies", 19, 0));
-	System.out.println(tester);
-	System.out.println(tester.addWordDiagonalRe("cookies", 19, 19));
-	System.out.println(tester);
-	System.out.println(tester.addWordDiagonalOther("cookies", 13, 13));
-	System.out.println(tester);
-	
-    }
+
 }

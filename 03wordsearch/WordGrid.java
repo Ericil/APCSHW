@@ -55,15 +55,18 @@ public class WordGrid{
 	    row < 0 || col < 0 ||
 	    col + rowdirect*word.length() >= data[0].length || col + rowdirect*word.length() < 0 ||
 	    row + coldirect*word.length() >= data[0].length || row + coldirect*word.length() < 0){
+	    System.out.println("1");
 	    return false;
 	}
 	int counter = 0;
 	while (counter < word.length()){
 	    if(data[row + (coldirect * counter)][col + (rowdirect * counter)] != '.' &&  data[row + (coldirect * counter)][col + (rowdirect * counter)] != word.charAt(counter)){
+		System.out.println("2");
 		return false;
 	    }
 	    counter = counter + 1;
 	}
+	System.out.println("3");
 	return true;
     }
     //rowdirec: 1 is to the right, -1 is to the left, 0 is no movement in that direction
@@ -77,8 +80,10 @@ public class WordGrid{
 		data[row + coldirect*counter][col + rowdirect*counter] = word.charAt(counter);
 		counter = counter + 1;
 	    }
+	    System.out.println("4");
 	    return true;
 	}else{
+	    System.out.println("5");
 	    return false;
 	}
 		
@@ -134,6 +139,9 @@ public class WordGrid{
     }
     public boolean addWordDiagonalOther(String word, int row, int col){
 	return helping(word, row, col, -1, 1);
+    }
+    public boolean addWordDiagonalOtherRe(String word, int row, int col){
+	return helping(word, row, col, 1, -1);
     }
 
 }

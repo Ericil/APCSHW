@@ -1,6 +1,7 @@
 public class Driver{
     public static void main(String[]args){
 	WordGrid tester = new WordGrid(20, 20);
+	/*
 	System.out.println(tester);
 	System.out.println(tester);
 	System.out.println(tester.addWordHorizontal("cookies", 6, 3));
@@ -17,6 +18,11 @@ public class Driver{
 	System.out.println(tester);
 	System.out.println(tester.addWordDiagonalOther("cookies", 13, 13));
 	System.out.println(tester);
-	
+	*/
+	System.out.println(tester);
+	System.out.println(tester.addWordDiagonalOther("cookies", 0, 19));
+	System.out.println(tester);
+	System.out.println(tester.addWordDiagonalOtherRe("cookies", 19, 0));
+	System.out.println(tester);
     }
 }

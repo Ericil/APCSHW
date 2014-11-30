@@ -3,10 +3,11 @@ import java.util.*;
 
 public class WordGrid{
     private char[][] data;
-    private int rowcounter, colcounter;
+    private int rowcounter, colcounter, rowdirect, coldirect;
     private String s = ".";
     private Random r = new Random();
     private ArrayList<String> words = new ArrayList<String>();
+    private ArrayList<String> actualwords = new ArrayList<String>();
     
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -18,6 +19,7 @@ public class WordGrid{
 	rowcounter = rows;
 	colcounter = cols;
 	clear();
+	setSeed(0);
     }
 
     /**Set all values in the WordGrid to spaces '.'
@@ -41,11 +43,14 @@ public class WordGrid{
 	    File thefile = new File(fileName);
 	    Scanner run = new Scanner(thefile);
 	    while(run.hasNextLine()){
-		words.add(run.next());
+		System.out.println("yep");
+		placing(run.next());
 	    }
 	}catch (FileNotFoundException meh){
 	    System.out.println("File not found");
 	}
+
+	System.out.println(actualwords);
 	System.out.println(words);
     }
     /**The proper formatting for a WordGrid is created in the toString.
@@ -69,7 +74,7 @@ public class WordGrid{
 	}
 	return printing;
     }
-    public boolean canplace(String word, int row, int col, int rowdirect, int coldirect){
+    private boolean canplace(String word, int row, int col){
 	if (rowdirect == 0 && coldirect == 0 ||
 	    row < 0 || col < 0 ||
 	    col + rowdirect*word.length() >= data[0].length || col + rowdirect*word.length() < 0 ||
@@ -90,11 +95,11 @@ public class WordGrid{
     }
     //rowdirec: 1 is to the right, -1 is to the left, 0 is no movement in that direction
     //coldirect: 1 is down, -1 is up, 0 is no movement in that direction
-    public boolean helping(String word, int row, int col, int rowdirect, int coldirect){
+    public boolean helping(String word, int row, int col){
 	int rows = 0;
 	int cols = 0;
 	int counter = 0;
-	if (canplace(word, row, col, rowdirect, coldirect)){
+	if (canplace(word, row, col)){
 	    while (counter < word.length()){
 		data[row + coldirect*counter][col + rowdirect*counter] = word.charAt(counter);
 		counter = counter + 1;
@@ -105,9 +110,28 @@ public class WordGrid{
 	    System.out.println("5");
 	    return false;
 	}
-		
-    }
 	
+    }
+    public void placing(String word){
+	int counter = 100;
+	int thing1, thing2;
+	boolean placed = false;
+	while (counter != 0 && placed == false){
+	    thing1 = r.nextInt(rowcounter);
+	    thing2 = r.nextInt(colcounter);
+	    coldirect = r.nextInt(3) - 1;
+	    rowdirect = r.nextInt(3) - 1;
+	    if (coldirect == 0 && rowdirect == 0){
+	    }else{
+		if (helping(word, thing1, thing2)){
+		    helping(word, thing1, thing2);
+		    actualwords.add(word);
+		    placed = true;
+		}
+		counter = counter - 1;
+	    }
+	}
+    }
 
 
 }

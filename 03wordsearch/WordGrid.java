@@ -49,7 +49,7 @@ public class WordGrid{
 	}catch (FileNotFoundException meh){
 	    System.out.println("File not found");
 	}
-
+	thespaces();
 	System.out.println(actualwords);
 	System.out.println(words);
     }
@@ -132,6 +132,20 @@ public class WordGrid{
 	    }
 	}
     }
+    public void thespaces(){
+	int counter = 0;
+	while (counter < rowcounter){
+	    int counter2 = 0;
+	    while (counter2 < colcounter){
+		if (data[counter][counter2] == '.'){
+		    data[counter][counter2] = (char)('a' + (int)(Math.random()*(26)));
+		}
+		counter2 = counter2 + 1;
+	    }
+	    counter = counter + 1;
+	}
+    }
+    
 
 
 }

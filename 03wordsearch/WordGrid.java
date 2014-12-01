@@ -138,7 +138,7 @@ public class WordGrid{
 	    int counter2 = 0;
 	    while (counter2 < colcounter){
 		if (data[counter][counter2] == '.'){
-		    data[counter][counter2] = (char)('a' + (int)(Math.random()*(26)));
+		    data[counter][counter2] = (char)('a' + (int)(r.nextInt(26)));
 		}
 		counter2 = counter2 + 1;
 	    }

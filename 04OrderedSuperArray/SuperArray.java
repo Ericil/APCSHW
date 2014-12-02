@@ -40,23 +40,10 @@ public class SuperArray{
 	data = data2;
     }
     public void add(String e){
-        if (size() == data.length){
-	    resize(data.length + 1);
-	    data[data.length - 1] = e;
-	}else{
-	    int counter = data.length - 1;
-	    boolean temp = false;
-	    while (temp == false){
-		if (data[counter] == null){
-		    data[counter] = e;
-		    temp = true;
-		}else{
-		    counter = counter - 1;
-		}
-	    }
-	}
+	add(data.length, e);
     }
     public void add(int index, String o){
+	System.out.println(data.length);
 	if (size() == data.length){
 	    if (index >= data.length){
 		resize(index + 1);
@@ -70,33 +57,20 @@ public class SuperArray{
 		counter = counter - 1;
 	    }
 	    data[index] = o;
+
 	}else{
 	    int counter = data.length - 1;
-	    boolean trigger = false;
-	    while ((counter >= index) && (trigger == false)){
-		if (data[counter] == null){
-		    trigger = true;
-		}
+	    resize(data.length + 1);
+	    counter = data.length - 1;
+	    while (counter > index){
+		System.out.println(counter);
+		System.out.println(index);
+		data[counter] = data[counter - 1];
 		counter = counter - 1;
 	    }
-	    if (trigger == false){
-		resize(data.length + 1);
-		counter = data.length - 1;
-		while (counter >= index){
-		    data[counter] = data[counter - 1];
-		    counter = counter - 1;
-		}
-		data[index] = o;
-	    }else{
-		counter = data.length - 1;
-		while (counter >= index){
-		    if (data[counter] == null){
-			data[counter] = data[counter - 1];
-		    }
-		    counter = counter - 1;
-		}
-		data[index] = o;
-	    }
+	    data[index] = o;
+
+	
 	   
 	}
     }
@@ -139,16 +113,18 @@ public class SuperArray{
     public static void main(String[]args){
 	SuperArray test = new SuperArray(4);
 	try{
+	    /*
 	    test.data[0] = "a";
 	    test.data[1] = "b";
 	    test.resize(3);
 	    test.data[2] = "c";
+	    */
 	    test.add("d");
 	    System.out.println(test.toString());
 	    System.out.println("Should return 1, 2, 3, 4");
 	    System.out.println(test.size());
 	    System.out.println("Should return 4");
-	    test.add(5, "e");
+	    test.add(2, "e");
 	    System.out.println(test.toString());
 	    System.out.println("Should return 1, 2, 3, 4, null, 5");
 	    test.clear();

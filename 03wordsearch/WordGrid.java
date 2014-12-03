@@ -16,6 +16,8 @@ public class WordGrid{
      */
     public WordGrid(int rows, int cols){
         data = new char[rows][cols];
+	System.out.println(rows);
+	System.out.println(cols);
 	rowcounter = rows;
 	colcounter = cols;
 	clear();
@@ -59,7 +61,7 @@ public class WordGrid{
 	int counter2 = 0;
 	while (counter >= 0){
 	    printing = printing + actualwords.get(counter);
-	    if (counter2 != 3){
+	    if (counter2 != 2){
 		printing = printing + "\t";
 		counter2 = counter2 + 1;
 	    }else{
@@ -70,7 +72,7 @@ public class WordGrid{
 	}
 	return printing;
     }
-	    
+    
     /**The proper formatting for a WordGrid is created in the toString.
      *@return a String with each character separated by spaces, and each row
      *separated by newlines.
@@ -81,7 +83,7 @@ public class WordGrid{
 	while(counter < rowcounter){
 	    int counter2 = 0;
 	    while (counter2 < colcounter){
-		if (counter2 == rowcounter - 1){
+		if (counter2 == colcounter - 1){
 		    printing = printing + data[counter][counter2] + "\n";
 		}else{
 		printing = printing + data[counter][counter2];
@@ -93,20 +95,33 @@ public class WordGrid{
 	return printing;
     }
     private boolean canplace(String word, int row, int col){
+	boolean trigger = true;
+	System.out.println("New");
 	if (rowdirect == 0 && coldirect == 0 ||
 	    row < 0 || col < 0 ||
 	    col + rowdirect*word.length() >= data[0].length || col + rowdirect*word.length() < 0 ||
 	    row + coldirect*word.length() >= data[0].length || row + coldirect*word.length() < 0){
-	    return false;
+	    trigger = false;
 	}
 	int counter = 0;
-	while (counter < word.length()){
-	    if(data[row + (coldirect * counter)][col + (rowdirect * counter)] != '.' &&  data[row + (coldirect * counter)][col + (rowdirect * counter)] != word.charAt(counter)){
-		return false;
+	while (counter < word.length() && trigger == true){
+	    System.out.println("row place:");
+	    System.out.println(row + (coldirect * counter));
+	    System.out.println("col place:");
+	    System.out.println(col + (rowdirect * counter));
+	    if (row + (coldirect * counter) >= rowcounter){
+		trigger = false;
+		System.out.println("1");
+	    }else if (col + (rowdirect * counter) >= rowcounter){
+		trigger = false;
+		System.out.println("2");
+	    }else if(data[row + (coldirect * counter)][col + (rowdirect * counter)] != '.' &&  data[row + (coldirect * counter)][col + (rowdirect * counter)] != word.charAt(counter)){
+		trigger = false;
+		System.out.println("3");
 	    }
 	    counter = counter + 1;
 	}
-	return true;
+	return trigger;
     }
     //rowdirec: 1 is to the right, -1 is to the left, 0 is no movement in that direction
     //coldirect: 1 is down, -1 is up, 0 is no movement in that direction

@@ -22,18 +22,30 @@ public class GUICtoF extends JFrame implements ActionListener{
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	pane = this.getContentPane();
 	pane.setLayout(new FlowLayout());
-	a = new JButton("Button One");
+	a = new JButton("F to C");
+	b = new JButton("C to F");
 	l = new JLabel("Text:");
 	t = new JTextField(10);
 	a.addActionListener(this);
-	a.setActionCommand("ID");
+	a.setActionCommand("C");
+	b.addActionListener(this);
+	b.setActionCommand("F");
 	pane.add(l);
 	pane.add(t);
 	pane.add(a);
+	pane.add(b);
+	
     }
     public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
-	System.out.println(action);
+	if (action == "C"){
+	    int degree = Integer.parseInt(t.getText());
+	    t.setText(Integer.toString(((degree - 32) * 5) / 9));
+	}
+	if (action == "F"){
+	    int degree = Integer.parseInt(t.getText());
+	    t.setText(Integer.toString(((degree * 9) / 5) + 32));
+	}
 	//if statements here
 	//<variable>.isSelected() (for text boxes)
     }
